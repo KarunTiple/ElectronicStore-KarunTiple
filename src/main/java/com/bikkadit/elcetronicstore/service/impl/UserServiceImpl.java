@@ -8,6 +8,7 @@ import com.bikkadit.elcetronicstore.exceptions.ResourceNotFoundException;
 import com.bikkadit.elcetronicstore.payloads.PageResponse;
 import com.bikkadit.elcetronicstore.repositories.UserRepository;
 import com.bikkadit.elcetronicstore.service.UserServiceI;
+import com.bikkadit.elcetronicstore.utility.PagingHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,8 @@ public class UserServiceImpl implements UserServiceI {
 
         User user = this.modelMapper.map(userDto, User.class);
 
+        user.setImageName("default.png");
+
         User savedUser = this.userRepository.save(user);
 
         log.info("Returning from UserService after creating the User : {}");
@@ -52,11 +55,11 @@ public class UserServiceImpl implements UserServiceI {
     }
 
     @Override
-    public UserDto updateUSer(UserDto userDto, String userId) {
+    public UserDto updateUser(UserDto userDto, String userId) {
 
         log.info("Entering the UserService to update the User with User ID : {} ", userId);
 
-        User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USERNOTFOUND + " : " + userId));
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND + " : " + userId));
 
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
@@ -76,7 +79,7 @@ public class UserServiceImpl implements UserServiceI {
 
         log.info("Entering the UserService to Delete the User with User ID : {} ", userId);
 
-        User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USERNOTFOUND + " : " + userId));
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND + " : " + userId));
 
         log.info("Returning from UserService after Deleting the User with User ID : {} ", userId);
 
@@ -99,17 +102,7 @@ public class UserServiceImpl implements UserServiceI {
 
         Page<User> page = this.userRepository.findAll(pageable);
 
-        List<User> users = page.getContent();
-
-        List<UserDto> userList = users.stream().map(user -> this.modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
-
-        PageResponse<UserDto> response = new PageResponse<>();
-        response.setContent(userList);
-        response.setPageNumber(page.getNumber());
-        response.setPageSize(page.getSize());
-        response.setTotalElements(page.getTotalElements());
-        response.setTotalPages(page.getTotalPages());
-        response.setLastPage(page.isLast());
+        PageResponse<UserDto> response = PagingHelper.getPageResponse(page, UserDto.class);
 
         log.info("Returning from UserService after Getting All User : {}");
 
@@ -121,7 +114,7 @@ public class UserServiceImpl implements UserServiceI {
 
         log.info("Entering the UserService to Get the User with User ID : {} ", userId);
 
-        User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USERNOTFOUND + " : " + userId));
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND + " : " + userId));
 
         log.info("Returning from UserService after Getting the User with User ID : {} ", userId);
 
@@ -133,7 +126,7 @@ public class UserServiceImpl implements UserServiceI {
 
         log.info("Entering the UserService to Get the User with Email Id : {} ", email);
 
-        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(AppConstants.EMAILNOTFOUND + " : " + email));
+        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(AppConstants.EMAIL_NOT_FOUND + " : " + email));
 
         log.info("Returning from UserService after Getting the User with Email Id : {} ", email);
 
