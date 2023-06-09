@@ -3,6 +3,7 @@ package com.bikkadit.elcetronicstore.controllers;
 import com.bikkadit.elcetronicstore.config.AppConstants;
 import com.bikkadit.elcetronicstore.dto.UserDto;
 import com.bikkadit.elcetronicstore.payloads.ApiResponse;
+import com.bikkadit.elcetronicstore.payloads.PageResponse;
 import com.bikkadit.elcetronicstore.service.UserServiceI;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,11 +92,15 @@ public class UserController {
      * @apiNote This api is for Getting all the User
      */
     @GetMapping("/user")
-    public ResponseEntity<List<UserDto>> getAllUser() {
+    public ResponseEntity<PageResponse<UserDto>> getAllUser(
+            @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir) {
 
         log.info("Entering the UserController to Get All User : {} ");
 
-        return new ResponseEntity<>(this.userService.getAllUser(), HttpStatus.OK);
+        return new ResponseEntity<>(this.userService.getAllUser(pageNumber, pageSize, sortBy, sortDir), HttpStatus.OK);
 
     }
 

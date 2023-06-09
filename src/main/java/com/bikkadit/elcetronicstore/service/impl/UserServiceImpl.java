@@ -5,11 +5,16 @@ import com.bikkadit.elcetronicstore.config.AppConstants;
 import com.bikkadit.elcetronicstore.dto.UserDto;
 import com.bikkadit.elcetronicstore.entities.User;
 import com.bikkadit.elcetronicstore.exceptions.ResourceNotFoundException;
+import com.bikkadit.elcetronicstore.payloads.PageResponse;
 import com.bikkadit.elcetronicstore.repositories.UserRepository;
 import com.bikkadit.elcetronicstore.service.UserServiceI;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -79,17 +84,36 @@ public class UserServiceImpl implements UserServiceI {
     }
 
     @Override
-    public List<UserDto> getAllUser() {
+    public PageResponse<UserDto> getAllUser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
 
         log.info("Entering the UserService to Get All User : {}");
 
-        List<User> allUsers = this.userRepository.findAll();
+        Sort sort = (sortDir.equalsIgnoreCase("asc")) ? (Sort.by(sortBy).ascending()) : (Sort.by(sortBy).descending());
+        /*Sort sort = null;
+        if (sortDir.equalsIgnoreCase("asc")) {
+            sort = Sort.by(sortBy).ascending();
+        } else {
+            sort = Sort.by(sortBy).descending();
+        }*/
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
 
-        List<UserDto> userDto = allUsers.stream().map(user -> this.modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
+        Page<User> page = this.userRepository.findAll(pageable);
+
+        List<User> users = page.getContent();
+
+        List<UserDto> userList = users.stream().map(user -> this.modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
+
+        PageResponse<UserDto> response = new PageResponse<>();
+        response.setContent(userList);
+        response.setPageNumber(page.getNumber());
+        response.setPageSize(page.getSize());
+        response.setTotalElements(page.getTotalElements());
+        response.setTotalPages(page.getTotalPages());
+        response.setLastPage(page.isLast());
 
         log.info("Returning from UserService after Getting All User : {}");
 
-        return userDto;
+        return response;
     }
 
     @Override

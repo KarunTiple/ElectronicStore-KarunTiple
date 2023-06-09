@@ -1,6 +1,7 @@
 package com.bikkadit.elcetronicstore.exceptions;
 
 import com.bikkadit.elcetronicstore.payloads.ApiResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -21,6 +23,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponse> resourceNotFoundExceptionHandler(ResourceNotFoundException ex) {
 
+        log.info("ResourceNotFoundException is initialized !!!");
         String message = ex.getMessage();
         ApiResponse apiResponse = new ApiResponse(message, true, HttpStatus.NOT_FOUND);
         return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.NOT_FOUND);
@@ -28,6 +31,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleMethodArgsNotValidException(MethodArgumentNotValidException ex) {
+
+        log.info("handleMethodArgsNotValidException is initialized !!!");
 
         Map<String, String> resp = new HashMap<>();
 

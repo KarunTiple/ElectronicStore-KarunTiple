@@ -1,9 +1,12 @@
 package com.bikkadit.elcetronicstore.exceptions;
 
+import lombok.Builder;
+
+@Builder
 public class ResourceNotFoundException extends RuntimeException {
 
     public ResourceNotFoundException() {
-        super();
+        super("Resource not found !!!");
     }
 
     public ResourceNotFoundException(String message) {

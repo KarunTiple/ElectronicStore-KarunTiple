@@ -15,4 +15,12 @@ public class AppConstants {
             + " Characters should be A to Z. "
             + " Number should be from 0 to 9. "
             + "Password must contain max of 15 Char and min of 6 Char.";
+
+    public static final String PAGE_NUMBER = "0";
+
+    public static final String PAGE_SIZE = "10";
+
+    public static final String SORT_BY = "name";
+
+    public static final String SORT_DIR = "asc";
 }

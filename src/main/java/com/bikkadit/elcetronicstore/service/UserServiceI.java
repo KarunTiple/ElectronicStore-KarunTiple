@@ -1,6 +1,7 @@
 package com.bikkadit.elcetronicstore.service;
 
 import com.bikkadit.elcetronicstore.dto.UserDto;
+import com.bikkadit.elcetronicstore.payloads.PageResponse;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface UserServiceI {
     void deleteUser(String userId);
 
     //    get All user
-    List<UserDto> getAllUser();
+    PageResponse<UserDto> getAllUser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
     //    get single user by id
     UserDto getUserById(String userId);
