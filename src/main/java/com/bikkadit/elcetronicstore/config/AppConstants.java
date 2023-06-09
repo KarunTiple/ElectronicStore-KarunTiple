@@ -2,15 +2,15 @@ package com.bikkadit.elcetronicstore.config;
 
 public class AppConstants {
 
-    public static final String USERNOTFOUND = "User not found with userId on the server";
+    public static final String USER_NOT_FOUND = "User not found with userId on the server";
 
-    public static final String EMAILNOTFOUND = "User not found with Email-Id on the server";
+    public static final String EMAIL_NOT_FOUND = "User not found with Email-Id on the server";
 
-    public static final String USERDELETED = "User is Deleted Successfully with Id : ";
+    public static final String USER_DELETED = "User is Deleted Successfully with Id : ";
 
-    public static final String INVALIDEMAIL = "Email address is not valid!!!";
+    public static final String INVALID_EMAIL = "Email address is not valid!!!";
 
-    public static final String PASSWORDPATTERN =  "Password should be according to pattern ...."
+    public static final String PASSWORD_PATTERN =  "Password should be according to pattern ...."
             + " Characters should be a to z. "
             + " Characters should be A to Z. "
             + " Number should be from 0 to 9. "

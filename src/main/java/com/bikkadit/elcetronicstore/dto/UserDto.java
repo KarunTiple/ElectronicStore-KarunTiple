@@ -3,9 +3,7 @@ package com.bikkadit.elcetronicstore.dto;
 import com.bikkadit.elcetronicstore.config.AppConstants;
 import com.bikkadit.elcetronicstore.utility.ImageNameValid;
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
 
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -24,7 +22,7 @@ public class UserDto extends CustomFieldsDto{
     private String name;
 
     @NotEmpty
-    @Email(message = AppConstants.INVALIDEMAIL)
+    @Email(message = AppConstants.INVALID_EMAIL)
     private String email;
 
     @NotEmpty
@@ -32,7 +30,7 @@ public class UserDto extends CustomFieldsDto{
 
     @Size(max = 15, min = 6)
     @Pattern(regexp = "^[A-Za-z][A-Za-z0-9]*",
-            message = AppConstants.PASSWORDPATTERN)
+            message = AppConstants.PASSWORD_PATTERN)
     private String password;
 
     @ImageNameValid(message = "Image name not valid ..")
