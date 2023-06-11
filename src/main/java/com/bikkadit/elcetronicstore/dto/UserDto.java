@@ -33,6 +33,6 @@ public class UserDto extends CustomFieldsDto{
             message = AppConstants.PASSWORD_PATTERN)
     private String password;
 
-    @ImageNameValid(message = "Image name not valid ..")
+    //@ImageNameValid(message = "Image name not valid ..")
     private String imageName;
 }

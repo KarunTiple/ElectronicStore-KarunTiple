@@ -7,18 +7,26 @@ import com.bikkadit.elcetronicstore.entities.User;
 import com.bikkadit.elcetronicstore.exceptions.ResourceNotFoundException;
 import com.bikkadit.elcetronicstore.payloads.PageResponse;
 import com.bikkadit.elcetronicstore.repositories.UserRepository;
+import com.bikkadit.elcetronicstore.service.FileService;
 import com.bikkadit.elcetronicstore.service.UserServiceI;
 import com.bikkadit.elcetronicstore.utility.PagingHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -32,6 +40,8 @@ public class UserServiceImpl implements UserServiceI {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Value("${user.profile.image.path}")
+    private String imagePath;
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -81,6 +91,23 @@ public class UserServiceImpl implements UserServiceI {
 
         User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND + " : " + userId));
 
+
+        //delete user profile image
+        //full path
+        String fullPath = imagePath + user.getImageName();
+
+        try {
+            Path path = Paths.get(fullPath);
+            Files.delete(path);
+
+        }catch (NoSuchElementException ex) {
+            log.error("User image not found with folder : {} ", ex.getMessage());
+
+        }catch (IOException ex){
+            log.error("Unable to found User Image : {} ", ex.getMessage());
+        }
+
+        //delete user
         log.info("Returning from UserService after Deleting the User with User ID : {} ", userId);
 
         this.userRepository.delete(user);
