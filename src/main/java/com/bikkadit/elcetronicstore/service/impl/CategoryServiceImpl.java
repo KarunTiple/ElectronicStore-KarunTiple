@@ -2,13 +2,20 @@ package com.bikkadit.elcetronicstore.service.impl;
 
 import com.bikkadit.elcetronicstore.config.AppConstants;
 import com.bikkadit.elcetronicstore.dto.CategoryDto;
+import com.bikkadit.elcetronicstore.dto.UserDto;
 import com.bikkadit.elcetronicstore.entities.Category;
 import com.bikkadit.elcetronicstore.exceptions.ResourceNotFoundException;
+import com.bikkadit.elcetronicstore.payloads.PageResponse;
 import com.bikkadit.elcetronicstore.repositories.CategoryRepository;
 import com.bikkadit.elcetronicstore.service.CategoryServiceI;
+import com.bikkadit.elcetronicstore.utility.PagingHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,8 +49,8 @@ public class CategoryServiceImpl implements CategoryServiceI {
 
         log.info("Entering the CategoryService to Update the Category : {}");
 
-        Category category = this.categoryRepository.
-                findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND + " : " + categoryId));
+        Category category = this.categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND + " : " + categoryId));
 
         category.setCategoryTitle(categoryDto.getCategoryTitle());
         category.setCategoryDescription(categoryDto.getCategoryDescription());
@@ -69,18 +76,21 @@ public class CategoryServiceImpl implements CategoryServiceI {
     }
 
     @Override
-    public List<CategoryDto> getAllCategory() {
+    public PageResponse<CategoryDto> getAllCategory(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
 
         log.info("Entering the CategoryService to Get All Category : {}");
 
-        List<Category> categories = this.categoryRepository.findAll();
+        Sort sort = (sortDir.equalsIgnoreCase("asc")) ? (Sort.by(sortBy).ascending()) : (Sort.by(sortBy).descending());
 
-        List<CategoryDto> categoryDtos = categories.stream().map((cat) -> this.modelMapper.map(cat, CategoryDto.class))
-                .collect(Collectors.toList());
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+
+        Page<Category> page = this.categoryRepository.findAll(pageable);
+
+        PageResponse<CategoryDto> pageResponse = PagingHelper.getPageResponse(page, CategoryDto.class);
 
         log.info("Returning from CategoryService after Getting All Category : {}");
 
-        return categoryDtos;
+        return pageResponse;
     }
 
     @Override
