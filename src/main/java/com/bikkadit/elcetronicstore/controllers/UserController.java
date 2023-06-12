@@ -102,6 +102,10 @@ public class UserController {
     //Get All User
 
     /**
+     * @param pageNumber
+     * @param pageSize
+     * @param sortBy
+     * @param sortDir
      * @return
      * @author Karun
      * @apiNote This api is for Getting all the User
@@ -186,9 +190,9 @@ public class UserController {
 
         String image = this.fileService.uploadFile(imageName, imageUploadPath);
 
-        UserDto user = this.userService.getUserById(userId);
-        user.setImageName(image);
-        UserDto userDto = this.userService.updateUser(user, userId);
+        UserDto updatedUser = this.userService.getUserById(userId);
+        updatedUser.setImageName(image);
+        UserDto userDto = this.userService.updateUser(updatedUser, userId);
 
         ImageResponse imageResponse = ImageResponse
                 .builder()
@@ -204,11 +208,12 @@ public class UserController {
     }
 
     // method to serve the files
+
     /**
-     * @author Karun
      * @param userId
      * @param response
      * @throws IOException
+     * @author Karun
      * @apiNote This api is for Downloading the Image of User
      */
 
