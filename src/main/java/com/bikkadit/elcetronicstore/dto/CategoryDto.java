@@ -1,15 +1,21 @@
 package com.bikkadit.elcetronicstore.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class CategoryDto extends  CustomFieldsDto{
 
+    private Integer categoryId;
+
     @NotEmpty
+    @Size(max = 10 , message = "Title should be of 10 Characters")
     private String categoryTitle;
 
     @NotEmpty
