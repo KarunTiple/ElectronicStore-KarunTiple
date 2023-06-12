@@ -170,7 +170,7 @@ public class UserController {
     // post image upload
 
     /**
-     * @param image
+     * @param imageName
      * @param userId
      * @return
      * @throws IOException
@@ -179,20 +179,20 @@ public class UserController {
      */
 
     @PostMapping("/user/image/upload/{userId}")
-    public ResponseEntity<ImageResponse> uploadUserImage(@RequestPart("userImage") MultipartFile image,
+    public ResponseEntity<ImageResponse> uploadUserImage(@RequestPart("userImage") MultipartFile imageName,
                                                          @PathVariable String userId) throws IOException {
 
         log.info("Entering the UserController to Upload Image in the User with User ID: {} ", userId);
 
-        UserDto user = this.userService.getUserById(userId);
-        String imageName = this.fileService.uploadFile(image, imageUploadPath);
+        String image = this.fileService.uploadFile(imageName, imageUploadPath);
 
-        user.setImageName(imageName);
+        UserDto user = this.userService.getUserById(userId);
+        user.setImageName(image);
         UserDto userDto = this.userService.updateUser(user, userId);
 
         ImageResponse imageResponse = ImageResponse
                 .builder()
-                .imageName(imageName)
+                .imageName(image).message("Image is uploaded")
                 .success(true)
                 .status(HttpStatus.CREATED)
                 .build();
@@ -204,7 +204,6 @@ public class UserController {
     }
 
     // method to serve the files
-
     /**
      * @author Karun
      * @param userId
