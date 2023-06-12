@@ -37,6 +37,8 @@ public class CategoryServiceImpl implements CategoryServiceI {
         log.info("Entering the CategoryService to Create the Category : {}");
 
         Category category = this.modelMapper.map(categoryDto, Category.class);
+
+        category.setCoverImage("Default.png");
         Category savedCategory = this.categoryRepository.save(category);
 
         log.info("Returning from CategoryService after Creating the Category : {}");
