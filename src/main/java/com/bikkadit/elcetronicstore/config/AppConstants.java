@@ -26,4 +26,6 @@ public class AppConstants {
 
     public static final String CATEGORY_NOT_FOUND = "Category not found with categoryId on the server";
 
+    public static final String  CATEGORY_DELETED = "Category is deleted successfully !!!";
+
 }
