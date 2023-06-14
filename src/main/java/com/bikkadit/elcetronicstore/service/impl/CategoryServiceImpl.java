@@ -2,7 +2,6 @@ package com.bikkadit.elcetronicstore.service.impl;
 
 import com.bikkadit.elcetronicstore.config.AppConstants;
 import com.bikkadit.elcetronicstore.dto.CategoryDto;
-import com.bikkadit.elcetronicstore.dto.UserDto;
 import com.bikkadit.elcetronicstore.entities.Category;
 import com.bikkadit.elcetronicstore.exceptions.ResourceNotFoundException;
 import com.bikkadit.elcetronicstore.payloads.PageResponse;
@@ -18,9 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Slf4j
 @Service
 public class CategoryServiceImpl implements CategoryServiceI {
@@ -34,14 +30,14 @@ public class CategoryServiceImpl implements CategoryServiceI {
     @Override
     public CategoryDto create(CategoryDto categoryDto) {
 
-        log.info("Entering the CategoryService to Create the Category : {}");
+        log.info("Entering the CategoryService to Create the Category : {}", categoryDto);
 
         Category category = this.modelMapper.map(categoryDto, Category.class);
 
         category.setCoverImage("Default.png");
         Category savedCategory = this.categoryRepository.save(category);
 
-        log.info("Returning from CategoryService after Creating the Category : {}");
+        log.info("Returning from CategoryService after Creating the Category : {}", categoryDto);
 
         return this.modelMapper.map(savedCategory, CategoryDto.class);
     }
@@ -49,7 +45,7 @@ public class CategoryServiceImpl implements CategoryServiceI {
     @Override
     public CategoryDto update(CategoryDto categoryDto, Integer categoryId) {
 
-        log.info("Entering the CategoryService to Update the Category : {}");
+        log.info("Entering the CategoryService to Update the Category : {} ", categoryId);
 
         Category category = this.categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND + " : " + categoryId));
@@ -58,7 +54,7 @@ public class CategoryServiceImpl implements CategoryServiceI {
         category.setCategoryDescription(categoryDto.getCategoryDescription());
         Category updatedCategory = this.categoryRepository.save(category);
 
-        log.info("Returning from CategoryService after Updating the Category : {}");
+        log.info("Returning from CategoryService after Updating the Category : {}", categoryId);
 
         return this.modelMapper.map(updatedCategory, CategoryDto.class);
     }
@@ -67,12 +63,12 @@ public class CategoryServiceImpl implements CategoryServiceI {
     public CategoryDto getCategory(Integer categoryId) {
 
 
-        log.info("Entering the CategoryService to Get Category : {}");
+        log.info("Entering the CategoryService to Get Category : {}", categoryId);
 
         Category category = this.categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND + " : " + categoryId));
 
-        log.info("Returning from CategoryService after Getting Category : {}");
+        log.info("Returning from CategoryService after Getting Category : {}", categoryId);
 
         return this.modelMapper.map(category, CategoryDto.class);
     }
@@ -80,7 +76,7 @@ public class CategoryServiceImpl implements CategoryServiceI {
     @Override
     public PageResponse<CategoryDto> getAllCategory(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
 
-        log.info("Entering the CategoryService to Get All Category : {}");
+        log.info("Entering the CategoryService to Get All Category : {}", pageNumber, pageSize, sortBy, sortDir);
 
         Sort sort = (sortDir.equalsIgnoreCase("asc")) ? (Sort.by(sortBy).ascending()) : (Sort.by(sortBy).descending());
 
@@ -90,7 +86,7 @@ public class CategoryServiceImpl implements CategoryServiceI {
 
         PageResponse<CategoryDto> pageResponse = PagingHelper.getPageResponse(page, CategoryDto.class);
 
-        log.info("Returning from CategoryService after Getting All Category : {}");
+        log.info("Returning from CategoryService after Getting All Category : {}", pageNumber, pageSize, sortBy, sortDir);
 
         return pageResponse;
     }
@@ -98,12 +94,12 @@ public class CategoryServiceImpl implements CategoryServiceI {
     @Override
     public void delete(Integer categoryId) {
 
-        log.info("Entering the CategoryService to Delete the Category : {}");
+        log.info("Entering the CategoryService to Delete the Category : {}", categoryId);
 
         Category category = this.categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND + " : " + categoryId));
 
-        log.info("Returning from CategoryService after Deleting the Category : {}");
+        log.info("Returning from CategoryService after Deleting the Category : {}", categoryId);
 
         this.categoryRepository.delete(category);
 
