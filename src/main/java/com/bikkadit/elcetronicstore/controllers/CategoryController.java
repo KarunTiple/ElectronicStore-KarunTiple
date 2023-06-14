@@ -34,11 +34,11 @@ public class CategoryController {
     @PostMapping("/")
     public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto) {
 
-        log.info("Entering the CategoryController to Create Category : {} ");
+        log.info("Entering the CategoryController to Create Category : {} ", categoryDto);
 
         CategoryDto createCategory = this.categoryService.create(categoryDto);
 
-        log.info("Returning from CategoryController after Creating Category : {} ");
+        log.info("Returning from CategoryController after Creating Category : {} ", categoryDto);
 
         return new ResponseEntity<CategoryDto>(createCategory, HttpStatus.CREATED);
     }
@@ -54,8 +54,7 @@ public class CategoryController {
      */
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody CategoryDto categoryDto,
-                                                      @PathVariable Integer categoryId) {
+    public ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody CategoryDto categoryDto, @PathVariable Integer categoryId) {
 
         log.info("Entering the CategoryController to Update Category with Id: {} ", categoryId);
 
@@ -101,16 +100,11 @@ public class CategoryController {
      */
 
     @GetMapping("/")
-    public ResponseEntity<PageResponse<CategoryDto>> getAllCategory(
-            @RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
-            @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir) {
+    public ResponseEntity<PageResponse<CategoryDto>> getAllCategory(@RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber, @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize, @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy, @RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir) {
 
         log.info("Entering the CategoryController to Get All Category : {} ");
 
-        PageResponse<CategoryDto> categories = this.categoryService
-                .getAllCategory(pageNumber, pageSize, sortBy, sortDir);
+        PageResponse<CategoryDto> categories = this.categoryService.getAllCategory(pageNumber, pageSize, sortBy, sortDir);
 
         log.info("Returning from CategoryController after Getting All Category : {} ");
 
@@ -126,7 +120,7 @@ public class CategoryController {
      * @apiNote This api is for Deleting the Category
      */
 
-    @DeleteMapping("/{catId}")
+    @DeleteMapping("/{categoryId}")
     public ResponseEntity<ApiResponse> deleteCategory(@PathVariable Integer categoryId) {
 
         log.info("Entering the CategoryController to Delete Category with ID: {} ", categoryId);
