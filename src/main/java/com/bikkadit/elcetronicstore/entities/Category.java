@@ -14,9 +14,8 @@ import javax.persistence.*;
 public class Category extends CustomFields {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Integer categoryId;
+    private String categoryId;
 
     @Column(name = "TITLE")
     private String categoryTitle;
