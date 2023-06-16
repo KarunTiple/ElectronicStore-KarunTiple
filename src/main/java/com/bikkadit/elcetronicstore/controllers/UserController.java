@@ -92,7 +92,12 @@ public class UserController {
         log.info("Entering the UserController to Delete User with User ID : {} ", userId);
 
         this.userService.deleteUser(userId);
-        ApiResponse message = ApiResponse.builder().message(AppConstants.USER_DELETED + " : " + userId).success(true).status(HttpStatus.OK).build();
+        ApiResponse message = ApiResponse
+                .builder()
+                .message(AppConstants.USER_DELETED + " : " + userId)
+                .success(true)
+                .status(HttpStatus.OK)
+                .build();
 
         log.info("Returning from UserController after Deleting User with User ID : {} ", userId);
 
@@ -182,7 +187,7 @@ public class UserController {
      * @apiNote This api is for Uploading the Image for User
      */
 
-    @PostMapping("/user/image/upload/{userId}")
+    @PatchMapping("/user/image/upload/{userId}")
     public ResponseEntity<ImageResponse> uploadUserImage(@RequestPart("userImage") MultipartFile imageName,
                                                          @PathVariable String userId) throws IOException {
 
@@ -192,7 +197,7 @@ public class UserController {
 
         UserDto updatedUser = this.userService.getUserById(userId);
         updatedUser.setImageName(image);
-        UserDto userDto = this.userService.updateUser(updatedUser, userId);
+        this.userService.updateUser(updatedUser, userId);
 
         ImageResponse imageResponse = ImageResponse
                 .builder()
@@ -221,7 +226,7 @@ public class UserController {
     public void downloadImage(@PathVariable String userId, HttpServletResponse response)
             throws IOException {
 
-        log.info("Entering the UserController to Serve the Image on the Server : {}");
+        log.info("Entering the UserController to Serve the Image on the Server with User ID: {}",userId);
 
         UserDto user = this.userService.getUserById(userId);
         log.info("User image name : {} ", user.getImageName());
@@ -232,7 +237,7 @@ public class UserController {
 
         StreamUtils.copy(resource, response.getOutputStream());
 
-        log.info("Returning from UserController after Serving the Image on the Server : {}");
+        log.info("Returning from UserController after Serving the Image on the Server with User ID: {}",userId);
 
     }
 

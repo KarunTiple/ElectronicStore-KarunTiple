@@ -54,9 +54,7 @@ public class UserServiceImpl implements UserServiceI {
         userDto.setUserId(userId);
 
         User user = this.modelMapper.map(userDto, User.class);
-
         user.setImageName("default.png");
-
         User savedUser = this.userRepository.save(user);
 
         log.info("Returning from UserService after creating the User : {}");
@@ -89,8 +87,8 @@ public class UserServiceImpl implements UserServiceI {
 
         log.info("Entering the UserService to Delete the User with User ID : {} ", userId);
 
-        User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND + " : " + userId));
-
+        User user = this.userRepository.findById(userId).
+                orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND + " : " + userId));
 
         //delete user profile image
         //full path
