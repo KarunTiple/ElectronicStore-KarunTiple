@@ -11,11 +11,19 @@ import com.bikkadit.elcetronicstore.utility.PagingHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -27,10 +35,18 @@ public class CategoryServiceImpl implements CategoryServiceI {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Value("${category.profile.image.path}")
+    private String imagePath;
+
     @Override
     public CategoryDto create(CategoryDto categoryDto) {
 
         log.info("Entering the CategoryService to Create the Category : {}", categoryDto);
+
+        // generate unique id in String format
+
+        String categoryId = UUID.randomUUID().toString();
+        categoryDto.setCategoryId(categoryId);
 
         Category category = this.modelMapper.map(categoryDto, Category.class);
 
@@ -43,7 +59,7 @@ public class CategoryServiceImpl implements CategoryServiceI {
     }
 
     @Override
-    public CategoryDto update(CategoryDto categoryDto, Integer categoryId) {
+    public CategoryDto update(CategoryDto categoryDto, String categoryId) {
 
         log.info("Entering the CategoryService to Update the Category : {} ", categoryId);
 
@@ -52,6 +68,7 @@ public class CategoryServiceImpl implements CategoryServiceI {
 
         category.setCategoryTitle(categoryDto.getCategoryTitle());
         category.setCategoryDescription(categoryDto.getCategoryDescription());
+        category.setCoverImage(categoryDto.getCoverImage());
         Category updatedCategory = this.categoryRepository.save(category);
 
         log.info("Returning from CategoryService after Updating the Category : {}", categoryId);
@@ -60,7 +77,7 @@ public class CategoryServiceImpl implements CategoryServiceI {
     }
 
     @Override
-    public CategoryDto getCategory(Integer categoryId) {
+    public CategoryDto getCategory(String categoryId) {
 
 
         log.info("Entering the CategoryService to Get Category : {}", categoryId);
@@ -76,7 +93,7 @@ public class CategoryServiceImpl implements CategoryServiceI {
     @Override
     public PageResponse<CategoryDto> getAllCategory(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
 
-        log.info("Entering the CategoryService to Get All Category : {}", pageNumber, pageSize, sortBy, sortDir);
+        log.info("Entering the CategoryService to Get All Category : {}");
 
         Sort sort = (sortDir.equalsIgnoreCase("asc")) ? (Sort.by(sortBy).ascending()) : (Sort.by(sortBy).descending());
 
@@ -92,12 +109,27 @@ public class CategoryServiceImpl implements CategoryServiceI {
     }
 
     @Override
-    public void delete(Integer categoryId) {
+    public void delete(String categoryId) {
 
         log.info("Entering the CategoryService to Delete the Category : {}", categoryId);
 
-        Category category = this.categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND + " : " + categoryId));
+        Category category = this.categoryRepository.findById(categoryId).
+                orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND + " : " + categoryId));
+
+        //delete user profile image
+        //full path
+        String fullPath = imagePath + category.getCoverImage();
+
+        try {
+            Path path = Paths.get(fullPath);
+            Files.delete(path);
+
+        }catch (NoSuchElementException ex) {
+            log.error("Category image not found with folder : {} ", ex.getMessage());
+
+        }catch (IOException ex){
+            log.error("Unable to found Category Image : {} ", ex.getMessage());
+        }
 
         log.info("Returning from CategoryService after Deleting the Category : {}", categoryId);
 
