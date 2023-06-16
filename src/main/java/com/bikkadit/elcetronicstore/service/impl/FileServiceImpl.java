@@ -19,7 +19,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public String uploadFile(MultipartFile file, String path) throws IOException {
 
-        log.info("Upload File Service is being initiated");
+        log.info("File Service is being initiated");
 
         String originalFilename = file.getOriginalFilename();
 
