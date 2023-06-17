@@ -1,5 +1,6 @@
 package com.bikkadit.elcetronicstore.dto;
 
+import com.bikkadit.elcetronicstore.config.AppConstants;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -15,28 +16,28 @@ public class ProductDto extends CustomFieldsDto{
 
     private String productId;
 
-    @NotEmpty(message = "Title should not be Empty")
+    @NotEmpty(message = AppConstants.TITLE_EMPTY)
     private String title;
 
-    @Size(max = 10000, message = "Length of the Description should not be greater than 10000 !!!")
+    @Size(max = 10000, message =AppConstants.DESCRIPTION_LENGTH )
     private String  description;
 
-    @NotEmpty(message = "Brand should not be Empty")
+    @NotEmpty(message = AppConstants.BRAND_EMPTY)
     private String brand;
 
-    @NotEmpty(message = "Price should not be Empty")
+    @NotEmpty(message =AppConstants.PRICE_EMPTY )
     private double price;
 
-    @NotEmpty(message = "Disounted Price should not be Empty")
+    @NotEmpty(message = AppConstants.DISCOUNTED_PRICE_EMPTY)
     private double discountedPrice;
 
-    @NotEmpty(message = "Quantity should not be Empty")
+    @NotEmpty(message = AppConstants.QUANTITY_EMPTY)
     private Integer quantity;
 
-    @NotEmpty(message = "Stock should not be Empty")
+    @NotEmpty(message =AppConstants.STOCK_EMPTY )
     private boolean stock;
 
-    @NotEmpty(message = "Live should not be Empty")
+    @NotEmpty(message =AppConstants.LIVE_EMPTY )
     private boolean live;
 
     private String productImage;
