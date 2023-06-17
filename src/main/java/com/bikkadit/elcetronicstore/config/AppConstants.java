@@ -28,4 +28,22 @@ public class AppConstants {
 
     public static final String  CATEGORY_DELETED = "Category is deleted successfully !!!";
 
+    public static final String PRODUCT_NOT_FOUND = "Product not found with productId on the server";
+
+    public static final String TITLE_EMPTY = "Title should not be Empty";
+
+    public static final String DESCRIPTION_LENGTH = "Length of the Description should not be greater than 10000 !!!";
+
+    public static final String BRAND_EMPTY = "Brand should not be Empty";
+
+    public static final String PRICE_EMPTY = "Price should not be Empty";
+
+    public static final String DISCOUNTED_PRICE_EMPTY = "Discounted Price should not be Empty";
+
+    public static final String QUANTITY_EMPTY = "Quantity should not be Empty";
+
+    public static final String STOCK_EMPTY = "Stock should not be Empty";
+
+    public static final String LIVE_EMPTY = "Live should not be Empty";
+
 }
