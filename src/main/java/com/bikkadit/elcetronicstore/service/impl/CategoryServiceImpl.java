@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements CategoryServiceI {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Value("${category.profile.image.path}")
+    @Value("${category.cover.image.path}")
     private String imagePath;
 
     @Override
@@ -116,7 +116,7 @@ public class CategoryServiceImpl implements CategoryServiceI {
         Category category = this.categoryRepository.findById(categoryId).
                 orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND + " : " + categoryId));
 
-        //delete user profile image
+        //delete category cover image
         //full path
         String fullPath = imagePath + category.getCoverImage();
 
