@@ -9,9 +9,12 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Products, String> {
 
-    //search
+
     Page<Products> findByTitleContaining(String keyword,Pageable pageable);
 
     Page<Products> findByLiveTrue(Pageable pageable);
+
+    Page<Products> findByBrandContaining(String keyword,Pageable pageable);
+
 
 }
