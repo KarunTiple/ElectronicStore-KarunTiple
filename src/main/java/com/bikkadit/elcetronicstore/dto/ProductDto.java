@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -25,19 +26,19 @@ public class ProductDto extends CustomFieldsDto{
     @NotEmpty(message = AppConstants.BRAND_EMPTY)
     private String brand;
 
-    @NotEmpty(message =AppConstants.PRICE_EMPTY )
+    @NotNull(message =AppConstants.PRICE_EMPTY )
     private double price;
 
-    @NotEmpty(message = AppConstants.DISCOUNTED_PRICE_EMPTY)
+    @NotNull(message = AppConstants.DISCOUNTED_PRICE_EMPTY)
     private double discountedPrice;
 
-    @NotEmpty(message = AppConstants.QUANTITY_EMPTY)
+    @NotNull(message = AppConstants.QUANTITY_EMPTY)
     private Integer quantity;
 
-    @NotEmpty(message =AppConstants.STOCK_EMPTY )
+    @NotNull(message =AppConstants.STOCK_EMPTY )
     private boolean stock;
 
-    @NotEmpty(message =AppConstants.LIVE_EMPTY )
+    @NotNull(message =AppConstants.LIVE_EMPTY )
     private boolean live;
 
     private String productImage;
