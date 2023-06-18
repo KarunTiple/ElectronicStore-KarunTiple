@@ -162,7 +162,7 @@ public class ProductServiceImpl implements ProductService {
     public PageResponse<ProductDto> searchByTitle
             (String keyword, Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
 
-        log.info("Entering the ProductService search Product by Title : {}", pageNumber);
+        log.info("Entering the ProductService to search Product by Title : {}", keyword);
 
         Sort sort = (sortDir.equalsIgnoreCase("desc")) ? (Sort.by(sortBy).descending()) : (Sort.by(sortBy).ascending());
 
@@ -170,7 +170,23 @@ public class ProductServiceImpl implements ProductService {
 
         Page<Products> page = this.productRepository.findByTitleContaining(keyword, pageable);
 
-        log.info("Returning from ProductService after searching Product by Title : {}", pageNumber);
+        log.info("Returning from ProductService after searching Product by Title : {}", keyword);
+
+        return PagingHelper.getPageResponse(page, ProductDto.class);
+    }
+
+    @Override
+    public PageResponse<ProductDto> searchByBrand(String keyword, Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
+
+        log.info("Entering the ProductService to search Product by Brand : {}", keyword);
+
+        Sort sort = (sortDir.equalsIgnoreCase("desc")) ? (Sort.by(sortBy).descending()) : (Sort.by(sortBy).ascending());
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+
+        Page<Products> page = this.productRepository.findByBrandContaining(keyword, pageable);
+
+        log.info("Returning from ProductService after searching Product by Brand : {}", keyword);
 
         return PagingHelper.getPageResponse(page, ProductDto.class);
     }
