@@ -46,4 +46,7 @@ public class AppConstants {
 
     public static final String LIVE_EMPTY = "Live should not be Empty";
 
+    public static final String  PRODUCT_DELETED = "Product is deleted successfully !!!";
+
+
 }
