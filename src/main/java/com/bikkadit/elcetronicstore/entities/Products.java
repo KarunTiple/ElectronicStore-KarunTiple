@@ -2,10 +2,7 @@ package com.bikkadit.elcetronicstore.entities;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -47,5 +44,8 @@ public class Products extends CustomFields {
     @Column(name = "PRODUCT_IMAGE")
     private String productImage;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
 }

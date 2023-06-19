@@ -2,10 +2,9 @@ package com.bikkadit.elcetronicstore.entities;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,6 +27,9 @@ public class Category extends CustomFields {
 
     @Column(name = "COVER_IMAGE")
     private String coverImage;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Products> products = new ArrayList<>();
 
 
 }
