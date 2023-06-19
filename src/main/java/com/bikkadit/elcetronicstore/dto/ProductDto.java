@@ -1,6 +1,7 @@
 package com.bikkadit.elcetronicstore.dto;
 
 import com.bikkadit.elcetronicstore.config.AppConstants;
+import com.bikkadit.elcetronicstore.entities.Category;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -41,4 +42,6 @@ public class ProductDto extends CustomFieldsDto {
     private boolean live;
 
     private String productImage;
+
+    private CategoryDto category;
 }

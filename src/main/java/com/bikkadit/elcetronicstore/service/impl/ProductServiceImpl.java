@@ -2,9 +2,11 @@ package com.bikkadit.elcetronicstore.service.impl;
 
 import com.bikkadit.elcetronicstore.config.AppConstants;
 import com.bikkadit.elcetronicstore.dto.ProductDto;
+import com.bikkadit.elcetronicstore.entities.Category;
 import com.bikkadit.elcetronicstore.entities.Products;
 import com.bikkadit.elcetronicstore.exceptions.ResourceNotFoundException;
 import com.bikkadit.elcetronicstore.payloads.PageResponse;
+import com.bikkadit.elcetronicstore.repositories.CategoryRepository;
 import com.bikkadit.elcetronicstore.repositories.ProductRepository;
 import com.bikkadit.elcetronicstore.service.ProductService;
 import com.bikkadit.elcetronicstore.utility.PagingHelper;
@@ -34,6 +36,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Value("${product.product.image.path}")
     private String imagePath;
@@ -189,5 +194,31 @@ public class ProductServiceImpl implements ProductService {
         log.info("Returning from ProductService after searching Product by Brand : {}", keyword);
 
         return PagingHelper.getPageResponse(page, ProductDto.class);
+    }
+
+    @Override
+    public ProductDto createWithCategory(ProductDto productDto, String categoryId) {
+
+        log.info("Entering the ProductService to Create the Product with Category : {}", categoryId);
+
+        //fetch the category from db
+        Category category = this.categoryRepository
+                .findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY_NOT_FOUND + " : " + categoryId));
+
+        // generate unique id in String format
+        String productId = UUID.randomUUID().toString();
+
+        productDto.setProductId(productId);
+
+        Products product = this.modelMapper.map(productDto, Products.class);
+
+        product.setProductImage("Default.png");
+        product.setCategory(category);
+        Products savedProducts = this.productRepository.save(product);
+
+        log.info("Returning from ProductService after Creating the Product with Category : {}", categoryId);
+
+        return this.modelMapper.map(savedProducts, ProductDto.class);
     }
 }

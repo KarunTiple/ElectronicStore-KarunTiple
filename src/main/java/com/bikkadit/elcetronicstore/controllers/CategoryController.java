@@ -2,11 +2,13 @@ package com.bikkadit.elcetronicstore.controllers;
 
 import com.bikkadit.elcetronicstore.config.AppConstants;
 import com.bikkadit.elcetronicstore.dto.CategoryDto;
+import com.bikkadit.elcetronicstore.dto.ProductDto;
 import com.bikkadit.elcetronicstore.payloads.ApiResponse;
 import com.bikkadit.elcetronicstore.payloads.ImageResponse;
 import com.bikkadit.elcetronicstore.payloads.PageResponse;
 import com.bikkadit.elcetronicstore.service.CategoryServiceI;
 import com.bikkadit.elcetronicstore.service.FileService;
+import com.bikkadit.elcetronicstore.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +37,9 @@ public class CategoryController {
 
     @Value("${category.cover.image.path}")
     private String imageUploadPath;
+
+    @Autowired
+    private ProductService productService;
 
 
 //	create
@@ -226,4 +231,28 @@ public class CategoryController {
         log.info("Returning from CategoryController after Serving the Image on the Server : {}", categoryId);
 
     }
+
+    //create Product with Category
+
+    /**
+     * @param categoryId
+     * @param productDto
+     * @return
+     * @author Karun
+     * @apiNote This api is for Creating Product with Category.
+     */
+    @PostMapping("/{categoryId}/product")
+    public ResponseEntity<ProductDto> createProductWithCategory(
+            @PathVariable("categoryId") String categoryId,
+            @RequestBody ProductDto productDto) {
+
+        log.info("Entering the CategoryController to Create Product with Category : {} ", categoryId);
+
+        ProductDto withCategory = this.productService.createWithCategory(productDto, categoryId);
+
+        log.info("Returning the CategoryController after Creating Product with Category : {} ", categoryId);
+
+        return new ResponseEntity<>(withCategory, HttpStatus.CREATED);
+    }
+
 }

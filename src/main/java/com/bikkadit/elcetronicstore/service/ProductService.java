@@ -28,4 +28,6 @@ public interface ProductService {
 
     PageResponse<ProductDto> searchByBrand(String keyword, Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
+    // Create Product with Category
+    ProductDto createWithCategory(ProductDto productDto, String categoryId);
 }
