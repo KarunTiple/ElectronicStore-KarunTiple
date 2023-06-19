@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Builder
 @Entity
 @Table(name = "USERS")
-public class User extends CustomFields{
+public class User extends CustomFields {
 
     @Id
     @Column(name = "ID")

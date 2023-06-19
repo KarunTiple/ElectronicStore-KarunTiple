@@ -124,10 +124,10 @@ public class CategoryServiceImpl implements CategoryServiceI {
             Path path = Paths.get(fullPath);
             Files.delete(path);
 
-        }catch (NoSuchElementException ex) {
+        } catch (NoSuchElementException ex) {
             log.error("Category image not found with folder : {} ", ex.getMessage());
 
-        }catch (IOException ex){
+        } catch (IOException ex) {
             log.error("Unable to found Category Image : {} ", ex.getMessage());
         }
 

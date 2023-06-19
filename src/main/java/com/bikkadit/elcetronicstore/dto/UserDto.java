@@ -1,7 +1,6 @@
 package com.bikkadit.elcetronicstore.dto;
 
 import com.bikkadit.elcetronicstore.config.AppConstants;
-import com.bikkadit.elcetronicstore.utility.ImageNameValid;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -14,7 +13,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @Builder
-public class UserDto extends CustomFieldsDto{
+public class UserDto extends CustomFieldsDto {
 
     private String userId;
 

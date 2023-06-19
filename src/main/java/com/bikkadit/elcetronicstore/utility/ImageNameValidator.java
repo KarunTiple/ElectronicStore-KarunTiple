@@ -13,14 +13,9 @@ public class ImageNameValidator implements ConstraintValidator<ImageNameValid, S
 
         log.info("Message from isValid :{}", value);
         //logic to create a annotation
-        if (value.isBlank()) {
-            //false means  property not validate
-            return false;
-
-        } else {
-            //true means property validate
-            return true;
-        }
+        //false means  property not validate
+        //true means property validate
+        return !value.isBlank();
 
     }
 }

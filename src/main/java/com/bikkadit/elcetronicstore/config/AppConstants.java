@@ -10,7 +10,7 @@ public class AppConstants {
 
     public static final String INVALID_EMAIL = "Email address is not valid!!!";
 
-    public static final String PASSWORD_PATTERN =  "Password should be according to pattern ...."
+    public static final String PASSWORD_PATTERN = "Password should be according to pattern ...."
             + " Characters should be a to z. "
             + " Characters should be A to Z. "
             + " Number should be from 0 to 9. "
@@ -26,7 +26,7 @@ public class AppConstants {
 
     public static final String CATEGORY_NOT_FOUND = "Category not found with categoryId on the server";
 
-    public static final String  CATEGORY_DELETED = "Category is deleted successfully !!!";
+    public static final String CATEGORY_DELETED = "Category is deleted successfully !!!";
 
     public static final String PRODUCT_NOT_FOUND = "Product not found with productId on the server";
 
@@ -46,7 +46,7 @@ public class AppConstants {
 
     public static final String LIVE_EMPTY = "Live should not be Empty";
 
-    public static final String  PRODUCT_DELETED = "Product is deleted successfully !!!";
+    public static final String PRODUCT_DELETED = "Product is deleted successfully !!!";
 
 
 }

@@ -24,8 +24,8 @@ public interface ProductService {
     PageResponse<ProductDto> getAllProductLive(Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
     //search Products
-    PageResponse<ProductDto> searchByTitle(String keyword,Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
+    PageResponse<ProductDto> searchByTitle(String keyword, Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
-    PageResponse<ProductDto> searchByBrand(String keyword,Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
+    PageResponse<ProductDto> searchByBrand(String keyword, Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
 }

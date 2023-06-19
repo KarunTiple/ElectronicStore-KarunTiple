@@ -11,12 +11,12 @@ import java.lang.annotation.*;
 public @interface ImageNameValid {
 
 
-        //default error message
-        String message() default "Invalid Image Name";
+    //default error message
+    String message() default "Invalid Image Name";
 
-        //represent group of constraints
-        Class<?>[] groups() default {};
+    //represent group of constraints
+    Class<?>[] groups() default {};
 
-        //additional Information about annotations
-        Class<? extends Payload>[] payload() default {};
+    //additional Information about annotations
+    Class<? extends Payload>[] payload() default {};
 }

@@ -226,7 +226,7 @@ public class UserController {
     public void downloadImage(@PathVariable String userId, HttpServletResponse response)
             throws IOException {
 
-        log.info("Entering the UserController to Serve the Image on the Server with User ID: {}",userId);
+        log.info("Entering the UserController to Serve the Image on the Server with User ID: {}", userId);
 
         UserDto user = this.userService.getUserById(userId);
         log.info("User image name : {} ", user.getImageName());
@@ -237,7 +237,7 @@ public class UserController {
 
         StreamUtils.copy(resource, response.getOutputStream());
 
-        log.info("Returning from UserController after Serving the Image on the Server with User ID: {}",userId);
+        log.info("Returning from UserController after Serving the Image on the Server with User ID: {}", userId);
 
     }
 

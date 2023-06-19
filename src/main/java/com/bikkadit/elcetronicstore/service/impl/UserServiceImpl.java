@@ -7,7 +7,6 @@ import com.bikkadit.elcetronicstore.entities.User;
 import com.bikkadit.elcetronicstore.exceptions.ResourceNotFoundException;
 import com.bikkadit.elcetronicstore.payloads.PageResponse;
 import com.bikkadit.elcetronicstore.repositories.UserRepository;
-import com.bikkadit.elcetronicstore.service.FileService;
 import com.bikkadit.elcetronicstore.service.UserServiceI;
 import com.bikkadit.elcetronicstore.utility.PagingHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +20,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -98,10 +96,10 @@ public class UserServiceImpl implements UserServiceI {
             Path path = Paths.get(fullPath);
             Files.delete(path);
 
-        }catch (NoSuchElementException ex) {
+        } catch (NoSuchElementException ex) {
             log.error("User image not found with folder : {} ", ex.getMessage());
 
-        }catch (IOException ex){
+        } catch (IOException ex) {
             log.error("Unable to found User Image : {} ", ex.getMessage());
         }
 

@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class CustomFields implements Serializable {
 
-    @Column(name = "is_active_switch",updatable = true)
+    @Column(name = "is_active_switch", updatable = true)
     private String isActive;
 
     @Column(name = "created_by")
@@ -37,7 +37,7 @@ public class CustomFields implements Serializable {
     @LastModifiedBy
     private String lastModifiedBy;
 
-    @Column(name = "update_date",updatable = true)
+    @Column(name = "update_date", updatable = true)
     @UpdateTimestamp
     private LocalDateTime modifiedOn;
 

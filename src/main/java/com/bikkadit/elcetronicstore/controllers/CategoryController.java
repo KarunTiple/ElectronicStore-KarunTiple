@@ -2,7 +2,6 @@ package com.bikkadit.elcetronicstore.controllers;
 
 import com.bikkadit.elcetronicstore.config.AppConstants;
 import com.bikkadit.elcetronicstore.dto.CategoryDto;
-import com.bikkadit.elcetronicstore.dto.UserDto;
 import com.bikkadit.elcetronicstore.payloads.ApiResponse;
 import com.bikkadit.elcetronicstore.payloads.ImageResponse;
 import com.bikkadit.elcetronicstore.payloads.PageResponse;
@@ -160,7 +159,7 @@ public class CategoryController {
 
     }
 
-    // post image upload
+//   post image upload
 
     /**
      * @param coverImage
@@ -173,7 +172,7 @@ public class CategoryController {
 
     @PatchMapping("/image/upload/{categoryId}")
     public ResponseEntity<ImageResponse> uploadCategoryImage(@RequestPart("categoryImage") MultipartFile coverImage,
-                                                         @PathVariable String categoryId) throws IOException {
+                                                             @PathVariable String categoryId) throws IOException {
 
         log.info("Entering the CategoryController to Upload Image in the Category with Category ID: {} ", categoryId);
 

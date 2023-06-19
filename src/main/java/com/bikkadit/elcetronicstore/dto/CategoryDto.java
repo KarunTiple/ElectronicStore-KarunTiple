@@ -10,12 +10,12 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategoryDto extends  CustomFieldsDto{
+public class CategoryDto extends CustomFieldsDto {
 
     private String categoryId;
 
     @NotEmpty
-    @Size(max = 10 , message = "Title should be of 10 Characters")
+    @Size(max = 10, message = "Title should be of 10 Characters")
     private String categoryTitle;
 
     @NotEmpty
