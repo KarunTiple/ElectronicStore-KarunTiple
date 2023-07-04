@@ -18,7 +18,7 @@ public class UserDto extends CustomFieldsDto {
     private String userId;
 
     @NotEmpty
-    private String name;
+    private String username;
 
     @NotEmpty
     @Email(message = AppConstants.INVALID_EMAIL)

@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserServiceI {
 
         User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND + " : " + userId));
 
-        user.setName(userDto.getName());
+        user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
         user.setGender(userDto.getGender());
         user.setPassword(userDto.getPassword());
@@ -161,7 +161,7 @@ public class UserServiceImpl implements UserServiceI {
 
         log.info("Entering the UserService to Search the User with Keyword : {} ", keyword);
 
-        List<User> users = this.userRepository.findByNameContaining(keyword);
+        List<User> users = this.userRepository.findByUsernameContaining(keyword);
 
         List<UserDto> userDto = users.stream().map(user -> modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
 

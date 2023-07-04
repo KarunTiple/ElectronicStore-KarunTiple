@@ -2,10 +2,7 @@ package com.bikkadit.elcetronicstore.entities;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,7 +10,12 @@ import javax.persistence.Table;
 @Getter
 @Builder
 @Entity
-@Table(name = "USERS")
+
+@Table(name = "USERS",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email")
+        })
 public class User extends CustomFields {
 
     @Id
@@ -21,9 +23,9 @@ public class User extends CustomFields {
     private String userId;
 
     @Column(name = "USERNAME")
-    private String name;
+    private String username;
 
-    @Column(name = "EMAIL", unique = true)
+    @Column(name = "EMAIL")
     private String email;
 
     @Column(name = "GENDER")

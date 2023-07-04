@@ -1,7 +1,9 @@
 package com.bikkadit.elcetronicstore.exceptions;
 
+import com.bikkadit.elcetronicstore.config.AppConstants;
 import com.bikkadit.elcetronicstore.payloads.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -52,4 +54,15 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiResponse> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+
+        log.info("DataIntegrityViolationException is initialized !!!");
+
+        ApiResponse apiResponse = new ApiResponse(AppConstants.USERNAME_EMAIL_EXIST, false, HttpStatus.CONFLICT);
+        // Additional error handling or logging can be performed here
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(apiResponse);
+    }
+
 }

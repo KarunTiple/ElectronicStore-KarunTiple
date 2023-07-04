@@ -48,5 +48,8 @@ public class AppConstants {
 
     public static final String PRODUCT_DELETED = "Product is deleted successfully !!!";
 
+    public static final String USERNAME_EMAIL_EXIST = "UserName and Email already Exist !!!"
+            + "Try Different UserName or Email-Id.";
+
 
 }
