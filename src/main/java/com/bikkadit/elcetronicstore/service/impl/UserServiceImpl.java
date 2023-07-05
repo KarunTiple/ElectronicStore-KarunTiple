@@ -85,8 +85,9 @@ public class UserServiceImpl implements UserServiceI {
 
         log.info("Entering the UserService to Delete the User with User ID : {} ", userId);
 
-        User user = this.userRepository.findById(userId).
-                orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND + " : " + userId));
+        User user = this.userRepository
+                .findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND + " : " + userId));
 
         //delete user profile image
         //full path
@@ -95,14 +96,12 @@ public class UserServiceImpl implements UserServiceI {
         try {
             Path path = Paths.get(fullPath);
             Files.delete(path);
-
         } catch (NoSuchElementException ex) {
             log.error("User image not found with folder : {} ", ex.getMessage());
 
         } catch (IOException ex) {
             log.error("Unable to found User Image : {} ", ex.getMessage());
         }
-
         //delete user
         log.info("Returning from UserService after Deleting the User with User ID : {} ", userId);
 
@@ -112,7 +111,7 @@ public class UserServiceImpl implements UserServiceI {
     @Override
     public PageResponse<UserDto> getAllUser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
 
-        log.info("Entering the UserService to Get All User : {}");
+        log.info("Entering the UserService to Get All User : {}",pageNumber);
 
         Sort sort = (sortDir.equalsIgnoreCase("asc")) ? (Sort.by(sortBy).ascending()) : (Sort.by(sortBy).descending());
         /*Sort sort = null;
@@ -127,7 +126,7 @@ public class UserServiceImpl implements UserServiceI {
 
         PageResponse<UserDto> response = PagingHelper.getPageResponse(page, UserDto.class);
 
-        log.info("Returning from UserService after Getting All User : {}");
+        log.info("Returning from UserService after Getting All User : {}", page);
 
         return response;
     }
@@ -137,7 +136,9 @@ public class UserServiceImpl implements UserServiceI {
 
         log.info("Entering the UserService to Get the User with User ID : {} ", userId);
 
-        User user = this.userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND + " : " + userId));
+        User user = this.userRepository
+                .findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER_NOT_FOUND + " : " + userId));
 
         log.info("Returning from UserService after Getting the User with User ID : {} ", userId);
 
@@ -149,7 +150,9 @@ public class UserServiceImpl implements UserServiceI {
 
         log.info("Entering the UserService to Get the User with Email Id : {} ", email);
 
-        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(AppConstants.EMAIL_NOT_FOUND + " : " + email));
+        User user = this.userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(AppConstants.EMAIL_NOT_FOUND + " : " + email));
 
         log.info("Returning from UserService after Getting the User with Email Id : {} ", email);
 
@@ -163,7 +166,8 @@ public class UserServiceImpl implements UserServiceI {
 
         List<User> users = this.userRepository.findByUsernameContaining(keyword);
 
-        List<UserDto> userDto = users.stream().map(user -> modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
+        List<UserDto> userDto = users.stream()
+                .map(user -> modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
 
         log.info("Returning from UserService after Searching the User with Keyword : {} ", keyword);
 
